@@ -3,9 +3,9 @@
 # SIG:BEGIN:header
 # ============================================================
 #  署名信息 / ATTRIBUTION  —  请勿删除 (DO NOT REMOVE)
-#  制作人：徐徐 任欣
+#  制作人：徐徐
 #  微信：doublebean_vip
-#  Copyright (c) 2026 徐徐 任欣. All Rights Reserved.
+#  Copyright (c) 2026 徐徐. All Rights Reserved.
 # ============================================================
 # SIG:END:header
 """

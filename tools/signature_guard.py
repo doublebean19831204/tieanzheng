@@ -3,15 +3,15 @@
 # SIG:BEGIN:header
 # ============================================================
 #  署名信息 / ATTRIBUTION  —  请勿删除 (DO NOT REMOVE)
-#  制作人：徐徐 任欣
+#  制作人：徐徐
 #  微信：doublebean_vip
-#  Copyright (c) 2026 徐徐 任欣. All Rights Reserved.
+#  Copyright (c) 2026 徐徐. All Rights Reserved.
 # ============================================================
 # SIG:END:header
 """
 署名注入 / 校验工具 (Signature Guard) —— 低调版
 
-制作人：徐徐 任欣   微信：doublebean_vip
+制作人：徐徐   微信：doublebean_vip
 
 设计要点
 --------
@@ -21,7 +21,7 @@
        ...规范内容...
        <!-- SIG:END:footer -->
 
-   校验是**逐组件、逐字**的：删掉任何一处、或把「徐徐 任欣」改成别的字、
+   校验是**逐组件、逐字**的：删掉任何一处、或把「徐徐」改成别的字、
    或只删块里一行，都会被检出（tampered / missing）。
 
 2. 视觉低调：页脚是一行 11px 浅灰小字 + 54px 半透明灰度二维码，
@@ -49,10 +49,10 @@ import re
 import sys
 
 # ================================================================ 署名常量
-AUTHOR_NAME = "徐徐 任欣"
+AUTHOR_NAME = "徐徐"
 AUTHOR_WECHAT = "doublebean_vip"
-COPYRIGHT = "Copyright (c) 2026 徐徐 任欣. All Rights Reserved."
-MARKER = "制作人：徐徐 任欣"
+COPYRIGHT = "Copyright (c) 2026 徐徐. All Rights Reserved."
+MARKER = "制作人：徐徐"
 
 # tools/qr_data.txt（微信二维码 base64）的 sha256，钉死二维码源
 QR_HASH = "1adc2cc0fe3713656e885374fd3f4dc2579d434cd79527389bee2f0fe7759ef6"
@@ -177,9 +177,9 @@ def squeeze_blanks(lines, idx, keep=0):
 
 # ================================================================ 规范内容
 # 低调版：只留一行小注释 + 两个 meta
-HTML_META_BODY = """    <!-- 署名（请勿删除 / DO NOT REMOVE）| 制作人：徐徐 任欣 | 微信：doublebean_vip -->
-    <meta name="author" content="徐徐 任欣">
-    <meta name="copyright" content="Copyright (c) 2026 徐徐 任欣. All Rights Reserved.">"""
+HTML_META_BODY = """    <!-- 署名（请勿删除 / DO NOT REMOVE）| 制作人：徐徐 | 微信：doublebean_vip -->
+    <meta name="author" content="徐徐">
+    <meta name="copyright" content="Copyright (c) 2026 徐徐. All Rights Reserved.">"""
 
 # 低调版：浅灰小字、二维码小且半透明灰度，悬停才稍微变清楚
 HTML_CSS_BODY = """        /* ===== 署名样式（请勿删除 / DO NOT REMOVE） ===== */
@@ -217,9 +217,9 @@ HTML_CSS_BODY = """        /* ===== 署名样式（请勿删除 / DO NOT REMOVE�
 def footer_body():
     """惰性构造：二维码 URI 可能在运行中被 recover_qr 恢复后改变。"""
     return (
-        "        <!-- 署名（请勿删除 / DO NOT REMOVE）| 制作人：徐徐 任欣 | 微信：doublebean_vip -->\n"
+        "        <!-- 署名（请勿删除 / DO NOT REMOVE）| 制作人：徐徐 | 微信：doublebean_vip -->\n"
         '        <footer class="site-footer" id="siteFooter">\n'
-        '            <span class="sig-line">制作人：徐徐 任欣</span>\n'
+        '            <span class="sig-line">制作人：徐徐、任欣</span>\n'
         '            <span class="sig-sep">·</span>\n'
         '            <span class="sig-line">微信：doublebean_vip</span>\n'
         '            <img class="sig-qr" alt="微信二维码" title="微信：doublebean_vip"\n'
@@ -232,24 +232,24 @@ def guard_body():
     return (
     "        /* ============================================================\n"
     "         *  署名保护 / SIGNATURE GUARD  —  请勿删除 (DO NOT REMOVE)\n"
-    "         *  制作人：徐徐 任欣\n"
+    "         *  制作人：徐徐\n"
     "         *  微信：doublebean_vip\n"
-    "         *  Copyright (c) 2026 徐徐 任欣. All Rights Reserved.\n"
+    "         *  Copyright (c) 2026 徐徐. All Rights Reserved.\n"
     "         *\n"
     "         *  作用：即使有人从 HTML 里删掉页脚署名，本段代码也会在运行时\n"
     "         *  自动把它重建回来，并在控制台告警。\n"
     "         * ============================================================ */\n"
     "        const AUTHOR_SIGNATURE = Object.freeze({\n"
-    "            name: '徐徐 任欣',\n"
+    "            name: '徐徐、任欣',\n"
     "            wechat: 'doublebean_vip',\n"
     "            qr: '" + QR_URI + "',\n"
-    "            copyright: 'Copyright © 2026 徐徐 任欣. All Rights Reserved.'\n"
+    "            copyright: 'Copyright © 2026 徐徐. All Rights Reserved.'\n"
     "        });\n"
     "\n"
     "        (function signatureGuard() {\n"
     "            const FOOTER_ID = 'siteFooter';\n"
     "            const WARN = '[署名保护] 检测到署名被移除，已自动恢复。' +\n"
-    "                         '制作人：徐徐 任欣（微信：doublebean_vip）';\n"
+    "                         '制作人：徐徐、任欣（微信：doublebean_vip）';\n"
     "\n"
     "            function buildFooter() {\n"
     "                const f = document.createElement('footer');\n"
@@ -286,7 +286,7 @@ def guard_body():
     "\n"
     "            // 控制台常驻署名（低调）\n"
     "            try {\n"
-    "                console.log('%c题库系统%c  制作人：徐徐 任欣 · 微信：doublebean_vip',\n"
+    "                console.log(\"%c中铁十八局集团市政工程有限公司'铁安证'题库系统%c  制作人：徐徐、任欣 · 微信：doublebean_vip\",\n"
     "                    'background:#bbb;color:#fff;padding:1px 6px;border-radius:3px;',\n"
     "                    'color:#999;');\n"
     "                console.log('%c' + AUTHOR_SIGNATURE.copyright, 'color:#ccc;');\n"
@@ -310,17 +310,17 @@ HTML_STRIP_BODY = """        // 剥离下划线开头的署名/元数据键，�
 JS_HEADER_BODY = """/* ============================================================
  *  题库数据 / Quiz Data
  *  署名信息 / ATTRIBUTION  —  请勿删除 (DO NOT REMOVE)
- *  制作人：徐徐 任欣
+ *  制作人：徐徐
  *  微信：doublebean_vip
- *  Copyright (c) 2026 徐徐 任欣. All Rights Reserved.
+ *  Copyright (c) 2026 徐徐. All Rights Reserved.
  * ============================================================ */"""
 
 JS_TAIL_BODY = """try {
     window.QUIZ_DATA._signature = Object.freeze({
-        author: '徐徐 任欣',
+        author: '徐徐',
         wechat: 'doublebean_vip',
-        copyright: 'Copyright (c) 2026 徐徐 任欣. All Rights Reserved.',
-        notice: '制作人：徐徐 任欣 — 请勿删除本署名信息 / DO NOT REMOVE THIS ATTRIBUTION'
+        copyright: 'Copyright (c) 2026 徐徐. All Rights Reserved.',
+        notice: '制作人：徐徐 — 请勿删除本署名信息 / DO NOT REMOVE THIS ATTRIBUTION'
     });
 } catch (e) {}"""
 
@@ -328,27 +328,27 @@ JSON_SIG = {
     "author": AUTHOR_NAME,
     "wechat": AUTHOR_WECHAT,
     "copyright": COPYRIGHT,
-    "notice": "制作人：徐徐 任欣 — 请勿删除本署名信息 / DO NOT REMOVE THIS ATTRIBUTION",
+    "notice": "制作人：徐徐 — 请勿删除本署名信息 / DO NOT REMOVE THIS ATTRIBUTION",
 }
 
 PY_HEADER_BODY = """# ============================================================
 #  署名信息 / ATTRIBUTION  —  请勿删除 (DO NOT REMOVE)
-#  制作人：徐徐 任欣
+#  制作人：徐徐
 #  微信：doublebean_vip
-#  Copyright (c) 2026 徐徐 任欣. All Rights Reserved.
+#  Copyright (c) 2026 徐徐. All Rights Reserved.
 # ============================================================"""
 
-# 注意：「制作人：徐徐 任欣」必须是连续纯文本（不能加粗体标记），
+# 注意：「制作人：徐徐」必须是连续纯文本（不能加粗体标记），
 # 否则 MARKER 精确匹配不上。
 MD_HEADER_BODY = """> **署名 / Attribution**
-> 制作人：徐徐 任欣 　微信：doublebean_vip
-> Copyright (c) 2026 徐徐 任欣. All Rights Reserved. — 请勿删除本署名信息。"""
+> 制作人：徐徐 　微信：doublebean_vip
+> Copyright (c) 2026 徐徐. All Rights Reserved. — 请勿删除本署名信息。"""
 
 YML_HEADER_BODY = """# ============================================================
 #  署名信息 / ATTRIBUTION  —  请勿删除 (DO NOT REMOVE)
-#  制作人：徐徐 任欣
+#  制作人：徐徐
 #  微信：doublebean_vip
-#  Copyright (c) 2026 徐徐 任欣. All Rights Reserved.
+#  Copyright (c) 2026 徐徐. All Rights Reserved.
 # ============================================================"""
 
 # pages.yml 里「部署前强制校验署名」的步骤（哨兵块包裹，可整块替换不重复插入）
@@ -357,7 +357,7 @@ YML_GUARD_BODY = """      - name: Setup Python
         with:
           python-version: "3.11"
 
-      # 署名校验：缺失或被篡改则部署中止（制作人：徐徐 任欣 / 微信 doublebean_vip）
+      # 署名校验：缺失或被篡改则部署中止（制作人：徐徐 / 微信 doublebean_vip）
       - name: Verify author signature (blocks deploy if removed)
         run: python tools/signature_guard.py check"""
 
@@ -379,7 +379,7 @@ STRIP_WIRE_OLD_FETCH = """                const response = await fetch('question
 STRIP_WIRE_NEW_FETCH = """                const response = await fetch('questions.json');
                 quizData = stripSignatureMeta(await response.json());"""
 
-LICENSE_TEXT = """Copyright (c) 2026 徐徐 任欣（微信：doublebean_vip）
+LICENSE_TEXT = """Copyright (c) 2026 徐徐（微信：doublebean_vip）
 
 保留所有权利 / All Rights Reserved.
 
@@ -388,11 +388,11 @@ LICENSE_TEXT = """Copyright (c) 2026 徐徐 任欣（微信：doublebean_vip）
 --------------------------------------------------------------------
 
 1. 本仓库（含题库系统网页、题库数据、转换脚本、文档等全部内容）的
-   作者与著作权人为 **徐徐 任欣**（微信: doublebean_vip）。
+   作者与著作权人为 **徐徐**（微信: doublebean_vip）。
 
 2. 任何复制、分发、展示或二次使用本仓库内容的行为，**必须**在所有
    副本中完整保留本文件、`AUTHORS.md`、`SIGNATURE.json` 以及各源文件
-   中的署名信息（"制作人：徐徐 任欣 / 微信：doublebean_vip"）。
+   中的署名信息（"制作人：徐徐 / 微信：doublebean_vip"）。
 
 3. **禁止删除、隐藏、替换或伪造署名信息**，包括但不限于：
    - 删除或注释掉源文件中的署名头部；
@@ -421,7 +421,7 @@ LICENSE_TEXT = """Copyright (c) 2026 徐徐 任欣（微信：doublebean_vip）
 --------------------------------------------------------------------
 联系方式 / Contact
 --------------------------------------------------------------------
-制作人：徐徐 任欣
+制作人：徐徐
 微信：doublebean_vip
 """
 
@@ -429,15 +429,15 @@ AUTHORS_TEXT = """# 署名 / AUTHORS
 
 | 角色 | 姓名 | 微信 |
 | ---- | ---- | ---- |
-| 制作人 (Author) | **徐徐 任欣** | doublebean_vip |
+| 制作人 (Author) | **徐徐** | doublebean_vip |
 
-**Copyright (c) 2026 徐徐 任欣. All Rights Reserved.**
+**Copyright (c) 2026 徐徐. All Rights Reserved.**
 
 ---
 
 ## 声明
 
-本项目（题库系统）由 **徐徐 任欣** 独立制作，包括网页界面、题库数据结构、
+本项目（题库系统）由 **徐徐** 独立制作，包括网页界面、题库数据结构、
 格式转换脚本与全部文档。
 
 任何人在复制、分发或二次使用本项目内容时，**必须完整保留本文件及所有
@@ -471,14 +471,14 @@ python tools/signature_guard.py list     # 列出全部受保护组件
 
 ---
 
-制作人：徐徐 任欣 　微信：doublebean_vip
+制作人：徐徐 　微信：doublebean_vip
 """
 
 GUARD_WORKFLOW = """# ============================================================
 #  署名信息 / ATTRIBUTION  —  请勿删除 (DO NOT REMOVE)
-#  制作人：徐徐 任欣
+#  制作人：徐徐
 #  微信：doublebean_vip
-#  Copyright (c) 2026 徐徐 任欣. All Rights Reserved.
+#  Copyright (c) 2026 徐徐. All Rights Reserved.
 #
 #  作用：每次 push / PR 逐字校验全部署名块，缺失或被篡改即失败。
 # ============================================================
@@ -863,7 +863,7 @@ def write_manifest(log):
         "_comment": "请勿删除本文件。署名清单与文件指纹，由 tools/signature_guard.py 维护。",
         "author": AUTHOR_NAME,
         "wechat": AUTHOR_WECHAT,
-        "attribution": "制作人：徐徐 任欣（微信：doublebean_vip）",
+        "attribution": "制作人：徐徐（微信：doublebean_vip）",
         "copyright": COPYRIGHT,
         "notice": "禁止删除、隐藏、替换或伪造署名信息。详见 LICENSE。",
         "marker": MARKER,
@@ -1067,10 +1067,10 @@ def cmd_check(log, verbose=True):
     log.append("")
     if bad:
         log.append("RESULT  : FAIL — 署名不完整或被篡改，禁止部署。")
-        log.append("          制作人：徐徐 任欣   微信：doublebean_vip")
+        log.append("          制作人：徐徐   微信：doublebean_vip")
         log.append("          修复：python tools/signature_guard.py inject")
         return 1
-    log.append("RESULT  : PASS — 全部 %d 处署名完整。制作人：徐徐 任欣（微信：%s）"
+    log.append("RESULT  : PASS — 全部 %d 处署名完整。制作人：徐徐（微信：%s）"
                % (len(good), AUTHOR_WECHAT))
     return 0
 

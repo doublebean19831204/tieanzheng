@@ -1,9 +1,9 @@
 # SIG:BEGIN:header
 # ============================================================
 #  署名信息 / ATTRIBUTION  —  请勿删除 (DO NOT REMOVE)
-#  制作人：徐徐 任欣
+#  制作人：徐徐
 #  微信：doublebean_vip
-#  Copyright (c) 2026 徐徐 任欣. All Rights Reserved.
+#  Copyright (c) 2026 徐徐. All Rights Reserved.
 # ============================================================
 # SIG:END:header
 name: Deploy GitHub Pages
@@ -38,7 +38,7 @@ jobs:
         with:
           python-version: "3.11"
 
-      # 署名校验：缺失或被篡改则部署中止（制作人：徐徐 任欣 / 微信 doublebean_vip）
+      # 署名校验：缺失或被篡改则部署中止（制作人：徐徐 / 微信 doublebean_vip）
       - name: Verify author signature (blocks deploy if removed)
         run: python tools/signature_guard.py check
 # SIG:END:deploy-guard

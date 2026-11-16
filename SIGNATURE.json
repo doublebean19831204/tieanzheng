@@ -1,11 +1,11 @@
 {
   "_comment": "请勿删除本文件。署名清单与文件指纹，由 tools/signature_guard.py 维护。",
-  "author": "徐徐 任欣",
+  "author": "徐徐",
   "wechat": "doublebean_vip",
-  "attribution": "制作人：徐徐 任欣（微信：doublebean_vip）",
-  "copyright": "Copyright (c) 2026 徐徐 任欣. All Rights Reserved.",
+  "attribution": "制作人：徐徐（微信：doublebean_vip）",
+  "copyright": "Copyright (c) 2026 徐徐. All Rights Reserved.",
   "notice": "禁止删除、隐藏、替换或伪造署名信息。详见 LICENSE。",
-  "marker": "制作人：徐徐 任欣",
+  "marker": "制作人：徐徐",
   "qr_sha256": "1adc2cc0fe3713656e885374fd3f4dc2579d434cd79527389bee2f0fe7759ef6",
   "protected_files": [
     ".github/workflows/pages.yml",
@@ -26,21 +26,21 @@
     "验证.py"
   ],
   "sha256": {
-    "index.html": "e049af8cb873fc2db7113757b789c43543317bbffc5ff7a690f2a3f548aa69dd",
-    "questions-data.js": "5bb0a259b65fc0ca68b037948fd7054adbb92817b02e876335174c5ff6767c94",
-    "questions.json": "b4f4a3040e8f46bca0e8cbb26e69e17d2fc83fd2dd5add69395d80769b0b88cf",
-    "LICENSE": "eb88585f211dec01b3b51b50b91574b55f0ad52781d4a7fb38e09a6670bd4427",
-    "AUTHORS.md": "43a6c7dbe8ad308f9c0caa35284ce5d3688a4ab3ea99668c263bd5fec0177020",
+    "index.html": "2576aa9a8dee6a6c0af63f377f01614028ccf3edf53ab0c5f3df9a57bd1e484d",
+    "questions-data.js": "d0f5489e4f531b1bd409bb6c08c15cafa88c2b51ccd055aa894815377c920d3c",
+    "questions.json": "b85cac1016962d8f0d1421dd7a3c1275037a83f71965dc3e8ad87d828c3e14a8",
+    "LICENSE": "5bc787202a9276ab0b52ea81f773b8e26cc4da0f9c5795d29b67c398451b9a8d",
+    "AUTHORS.md": "1610add71698918ba1e3f44c0a9d2cc5746f91abfcb0e0d90c86915a789a6810",
     "tools/qr_data.txt": "3a00aef8ec3c4a345118b84018239a1ee8d6dce36dc0e473269b90f47a026f57",
     "assets/wechat_qr.png": "b5c17e3d116a128979912f0602143df637f10d61f349643dec0b57a8ac975897",
-    ".github/workflows/pages.yml": "60f1a0f2b18db899eb42b79d2796e8ed1e61154dd9999d0dd44d82e65694182e",
-    ".github/workflows/signature-guard.yml": "d5e7735fe4bb01dd170df5cb564937e04468589a84bfd7f791c9017baad6b9de",
-    "tools/signature_guard.py": "0fc3a44cca215b1dedbe619d9900e8a3879f48c7ec4496705d2481f6435c066c",
-    "转换题库.py": "136810b196018aa4d73a3bf843e1430efc9e9ee3270c0a576e055a638193ef0e",
-    "验证.py": "4a081b4b248d7a08950a36defa6002ad965e1e83a52b14be4b0a7ef7b2ddc20e",
-    "README.md": "08ae766e07f41f9f2df659b717d0ad13ae0424849f7774f79ba1e2dd0c5bc32c",
-    "快速开始.md": "967061ba95c7491606190d97df8c7af59d06434ed8411134d502dca6ee28ce0a",
-    "添加题目指南.md": "1499e03544e8fbda3416ee745562f7f01faebdd3791b27019a6de47d3c68eb11",
-    "转换指南.md": "9ef97c3f007e27e5528be3d7011444f59ea0cef2991a2cb21810c62a69973dd6"
+    ".github/workflows/pages.yml": "f8b5bba93ef103fee1f69a3cd49a17ae7be0c6ba7f2dea00d6bb5a3e819f491d",
+    ".github/workflows/signature-guard.yml": "4519bff214b21959ac1dd6a5087c6a6e3e25544af1e5910a7502e3e75bc0b456",
+    "tools/signature_guard.py": "bc48599f1fed4b16f38ff5daefafa1564ca1bcc0d9d7f412a7d4e0102933e591",
+    "转换题库.py": "a5b917e01a5d50c5cbbc61f17de70c5b791132ccb12cbf312c294c2945d340c7",
+    "验证.py": "8cc6f1979ba0208e2a1758eb35e9315db7c068bf2f63884fb88e25938781e3f7",
+    "README.md": "90095f328124e1c7e873b59b78e9bc1751f0a511d9e1d38892c75928fc451091",
+    "快速开始.md": "3df81c242e5b4ca03e14f487ea1d9303dea2ba560020f681c196ab2e5b71d4c8",
+    "添加题目指南.md": "9ce09d818a5d3130770f15865c8b167175674131da1a672aa0f406bce3abfc6c",
+    "转换指南.md": "f738009c3dc153f83bf833d8baa22dcf91aa968fb3cf303a3dbb82453fc089c2"
   }
 }

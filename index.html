@@ -4,11 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <!-- SIG:BEGIN:meta -->
-    <!-- 署名（请勿删除 / DO NOT REMOVE）| 制作人：徐徐 任欣 | 微信：doublebean_vip -->
-    <meta name="author" content="徐徐 任欣">
-    <meta name="copyright" content="Copyright (c) 2026 徐徐 任欣. All Rights Reserved.">
+    <!-- 署名（请勿删除 / DO NOT REMOVE）| 制作人：徐徐 | 微信：doublebean_vip -->
+    <meta name="author" content="徐徐">
+    <meta name="copyright" content="Copyright (c) 2026 徐徐. All Rights Reserved.">
 <!-- SIG:END:meta -->
-    <title>铁安证题库</title>
+    <title>中铁十八局集团市政工程有限公司'铁安证'题库系统</title>
     <style>
         * {
             margin: 0;
@@ -17,380 +17,464 @@
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+            background: #eef1f6;
+            color: #1f2d3d;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* ===== 应用外框 ===== */
+        .app {
+            max-width: 920px;
+            margin: 0 auto;
             min-height: 100vh;
+            background: #fff;
             display: flex;
-            justify-content: center;
+            flex-direction: column;
+            box-shadow: 0 0 24px rgba(31, 45, 61, .08);
+        }
+
+        @media (min-width: 960px) {
+            body { padding: 28px 16px; }
+            .app {
+                min-height: calc(100vh - 56px);
+                border: 1px solid #e3e8ee;
+                border-radius: 14px;
+                overflow: hidden;
+            }
+        }
+
+        /* ===== 顶栏 ===== */
+        .app-header {
+            display: flex;
             align-items: center;
-            padding: 20px;
+            gap: 12px;
+            padding: 14px 24px;
+            border-bottom: 1px solid #e8ebf0;
+            background: #fff;
         }
 
-        .container {
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
-            max-width: 700px;
-            width: 100%;
-            padding: 40px;
+        .app-logo {
+            width: 38px;
+            height: 38px;
+            border-radius: 10px;
+            background: linear-gradient(135deg, #4c7dff, #6a5cff);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            flex-shrink: 0;
         }
 
-        .header {
-            text-align: center;
-            margin-bottom: 30px;
+        .app-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: #1f2d3d;
+            line-height: 1.4;
         }
 
-        .header h1 {
-            color: #333;
-            margin-bottom: 10px;
+        .app-subtitle {
+            font-size: 12px;
+            color: #8a94a6;
+            font-weight: 400;
+            margin-left: 8px;
+        }
+
+        .header-progress {
+            margin-left: auto;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            min-width: 200px;
         }
 
         .progress {
-            background: #e0e0e0;
+            background: #e8ebf0;
             height: 6px;
             border-radius: 3px;
-            margin-top: 15px;
             overflow: hidden;
+            flex: 1;
         }
 
         .progress-bar {
-            background: #667eea;
+            background: linear-gradient(90deg, #4c7dff, #6a5cff);
             height: 100%;
+            border-radius: 3px;
             transition: width 0.3s ease;
         }
 
-        .question-section {
-            margin-bottom: 30px;
+        #progressText {
+            font-size: 12px;
+            color: #8a94a6;
+            white-space: nowrap;
         }
 
-        .question-number {
-            color: #667eea;
-            font-weight: bold;
-            margin-bottom: 10px;
+        /* ===== 分类标签栏 ===== */
+        .category-selector {
+            display: flex;
+            gap: 2px;
+            padding: 0 16px;
+            border-bottom: 1px solid #e8ebf0;
+            background: #fff;
+            overflow-x: auto;
+            scrollbar-width: none;
         }
 
-        .question-text {
-            font-size: 18px;
-            color: #333;
-            margin-bottom: 20px;
-            line-height: 1.6;
-        }
+        .category-selector::-webkit-scrollbar { display: none; }
 
-        .options {
+        /* 每个分类与其错题本上下两行对齐成一组 */
+        .cat-group {
             display: flex;
             flex-direction: column;
-            gap: 12px;
         }
 
-        .option {
-            display: flex;
-            align-items: center;
-            padding: 15px;
-            border: 2px solid #e0e0e0;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            background: #fafafa;
-        }
-
-        .option:hover {
-            border-color: #667eea;
-            background: #f0f4ff;
-        }
-
-        .option input[type="radio"] {
-            margin-right: 12px;
-            cursor: pointer;
-            width: 18px;
-            height: 18px;
-        }
-
-        .option.selected {
-            border-color: #667eea;
-            background: #f0f4ff;
-        }
-
-        .option.correct {
-            border-color: #4caf50;
-            background: #f1f8f4;
-        }
-
-        .option.incorrect {
-            border-color: #f44336;
-            background: #fef1f0;
-        }
-
-        .option-label {
-            cursor: pointer;
-            flex: 1;
-            user-select: none;
-        }
-
-        .result-section {
-            display: none;
-            margin-top: 20px;
-            padding: 20px;
-            border-radius: 8px;
-        }
-
-        .result-section.show {
-            display: block;
-        }
-
-        .result-section.correct {
-            background: #f1f8f4;
-            border-left: 4px solid #4caf50;
-        }
-
-        .result-section.incorrect {
-            background: #fef1f0;
-            border-left: 4px solid #f44336;
-        }
-
-        .result-title {
-            font-weight: bold;
-            margin-bottom: 10px;
-        }
-
-        .result-section.correct .result-title {
-            color: #4caf50;
-        }
-
-        .result-section.incorrect .result-title {
-            color: #f44336;
-        }
-
-        .result-text {
-            color: #333;
-            line-height: 1.6;
-        }
-
-        .buttons {
-            display: flex;
-            gap: 12px;
-            margin-top: 30px;
-            justify-content: center;
-        }
-
-        button {
-            padding: 12px 24px;
-            border: none;
-            border-radius: 6px;
-            font-size: 16px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-weight: bold;
-        }
-
-        .btn-submit {
-            background: #667eea;
-            color: white;
-            flex: 1;
-            max-width: 200px;
-        }
-
-        .btn-submit:hover {
-            background: #5568d3;
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
-        }
-
-        .btn-submit:disabled {
-            background: #ccc;
-            cursor: not-allowed;
-            transform: none;
-        }
-
-        .btn-next {
-            background: #764ba2;
-            color: white;
-            flex: 1;
-            max-width: 200px;
-        }
-
-        .btn-next:hover {
-            background: #6a3f8d;
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(118, 75, 162, 0.3);
-        }
-
-        .btn-restart {
-            background: #667eea;
-            color: white;
-            flex: 1;
-            max-width: 200px;
-        }
-
-        .btn-restart:hover {
-            background: #5568d3;
-        }
-
-        .completion {
-            text-align: center;
-            display: none;
-        }
-
-        .completion.show {
-            display: block;
-        }
-
-        .completion h2 {
-            color: #667eea;
-            margin-bottom: 20px;
-        }
-
-        .score {
-            font-size: 48px;
-            color: #667eea;
-            margin-bottom: 20px;
-            font-weight: bold;
-        }
-
-        .score-text {
-            color: #666;
-            margin-bottom: 30px;
-            font-size: 18px;
-        }
-
-        .category-selector {
-            margin-bottom: 30px;
-            text-align: center;
-        }
-
-        .category-buttons {
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-            justify-content: center;
+        .cat-group + .cat-group {
+            border-left: 1px solid #eef1f4;
         }
 
         .category-btn {
-            padding: 10px 20px;
-            border: 2px solid #667eea;
-            background: white;
-            color: #667eea;
-            border-radius: 6px;
+            border: none;
+            background: transparent;
+            color: #5a6b7b;
+            font-size: 14px;
+            font-weight: 600;
+            padding: 10px 18px 8px;
+            border-bottom: 3px solid transparent;
             cursor: pointer;
-            transition: all 0.3s ease;
-            font-weight: bold;
+            white-space: nowrap;
+            text-align: center;
+            transition: color .2s ease, background .2s ease;
         }
+
+        .category-btn:hover { color: #3d7bff; background: #f5f8ff; }
 
         .category-btn.active {
-            background: #667eea;
-            color: white;
+            color: #3d7bff;
+            border-bottom-color: #3d7bff;
         }
 
-        .category-btn:hover {
-            background: #667eea;
-            color: white;
+        /* 第二行：错题本（副行，字号略小） */
+        .category-btn.wrong-btn {
+            color: #b85c5c;
+            font-size: 12px;
+            font-weight: 500;
+            padding: 6px 18px 8px;
+        }
+        .category-btn.wrong-btn:hover { color: #d64545; background: #fff5f5; }
+        .category-btn.wrong-btn.active { color: #d64545; border-bottom-color: #d64545; }
+
+        /* ===== 模式切换（答题 / 背题） ===== */
+        .mode-switch {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            padding: 12px 24px;
+            background: #fff;
+            border-bottom: 1px solid #e8ebf0;
         }
 
-        .stats {
-            display: flex;
-            gap: 20px;
-            margin-top: 20px;
-            text-align: center;
-        }
-
-        .stat-item {
-            flex: 1;
-            padding: 15px;
-            background: #f5f5f5;
+        .mode-btn {
+            padding: 9px 0;
+            border: 1px solid #dfe4ea;
+            background: #f7f9fc;
+            color: #5a6b7b;
             border-radius: 8px;
-        }
-
-        .stat-number {
-            font-size: 24px;
-            font-weight: bold;
-            color: #667eea;
-        }
-
-        .stat-label {
-            color: #666;
             font-size: 14px;
-            margin-top: 5px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all .15s ease;
+        }
+
+        .mode-btn:hover { border-color: #b9c8ff; color: #3d7bff; }
+
+        .mode-btn.active {
+            background: #4c7dff;
+            border-color: #4c7dff;
+            color: #fff;
+            box-shadow: 0 2px 8px rgba(76, 125, 255, .25);
+        }
+
+        @media (max-width: 640px) {
+            .mode-switch { padding: 10px 14px; }
+        }
+
+        /* ===== 主体 ===== */
+        #quizContent {
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+            min-height: 0;
         }
 
         .toolbar {
             display: flex;
-            gap: 10px;
+            gap: 8px;
             align-items: center;
-            justify-content: center;
+            justify-content: flex-end;
             flex-wrap: wrap;
-            margin: 15px 0 5px;
+            padding: 10px 24px;
+            background: #fafbfc;
+            border-bottom: 1px solid #eef1f4;
         }
+
+        .toolbar span { font-size: 12px; color: #8a94a6; }
 
         .toolbar input {
-            width: 80px;
-            padding: 8px 10px;
-            border: 2px solid #e0e0e0;
+            width: 64px;
+            padding: 6px 8px;
+            border: 1px solid #dfe4ea;
             border-radius: 6px;
-            font-size: 14px;
+            font-size: 13px;
             text-align: center;
+            outline-color: #4c7dff;
         }
 
-        .btn-small {
-            padding: 8px 16px;
-            border: none;
-            border-radius: 6px;
-            font-size: 14px;
+        .app-main {
+            flex: 1;
+            padding: 24px;
+            background: #f7f9fc;
+            overflow-y: auto;
+        }
+
+        .question-section {
+            background: #fff;
+            border: 1px solid #e8ebf0;
+            border-radius: 12px;
+            padding: 24px 28px;
+            box-shadow: 0 1px 3px rgba(31, 45, 61, .04);
+        }
+
+        .q-head {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 14px;
+        }
+
+        .question-number {
+            color: #8a94a6;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .qtype-badge {
+            background: #e8f0ff;
+            color: #3d7bff;
+            border-radius: 4px;
+            padding: 2px 8px;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .question-text {
+            font-size: 16.5px;
+            color: #1f2d3d;
+            font-weight: 600;
+            line-height: 1.75;
+            margin-bottom: 20px;
+        }
+
+        .options { display: flex; flex-direction: column; gap: 10px; }
+
+        .option {
+            display: flex;
+            align-items: flex-start;
+            padding: 12px 14px;
+            border: 1px solid #e3e8ee;
+            border-radius: 8px;
             cursor: pointer;
-            font-weight: bold;
-            transition: all 0.2s ease;
-        }
-
-        .btn-jump {
-            background: #764ba2;
-            color: white;
-        }
-
-        .btn-jump:hover {
-            background: #6a3f8d;
-        }
-
-        .btn-reset {
             background: #fff;
-            color: #f44336;
-            border: 2px solid #f44336;
+            transition: all .15s ease;
         }
 
-        .btn-reset:hover {
-            background: #f44336;
-            color: white;
+        .option:hover { border-color: #b9c8ff; background: #f8faff; }
+        .option input { display: none; }
+        .option.selected { border-color: #4c7dff; background: #f0f5ff; }
+
+        .option-circle {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            background: #f0f2f5;
+            border: 1px solid #dfe4ea;
+            color: #5a6b7b;
+            font-size: 13px;
+            font-weight: 700;
+            margin-right: 12px;
+            flex-shrink: 0;
         }
 
-        .btn-clearwrong {
-            background: #fff;
-            color: #ff9800;
-            border: 2px solid #ff9800;
+        .option.selected .option-circle { background: #4c7dff; border-color: #4c7dff; color: #fff; }
+        .option.is-correct .option-circle { background: #26bf7a; border-color: #26bf7a; color: #fff; }
+        .option.is-wrongpick .option-circle { background: #f4504c; border-color: #f4504c; color: #fff; }
+        .option.is-correct { border-color: #bfe8d2; background: #f4fbf7; }
+        .option.is-wrongpick { border-color: #f5c4c2; background: #fef6f5; }
+        .option.is-correct .option-label { color: #1d9e63; font-weight: 700; }
+        .option.is-wrongpick .option-label { color: #d64545; }
+        .option.answered { pointer-events: none; }
+
+        .option-label {
+            flex: 1;
+            user-select: none;
+            line-height: 1.6;
+            font-size: 15px;
+            color: #33414f;
+            padding-top: 2px;
         }
 
-        .btn-clearwrong:hover {
-            background: #ff9800;
-            color: white;
+        .answer-line {
+            display: none;
+            margin-top: 20px;
+            padding-top: 16px;
+            border-top: 1px dashed #e0e4ea;
+            font-size: 15px;
+            font-weight: 700;
+            color: #33414f;
+            gap: 28px;
+            flex-wrap: wrap;
         }
+        .answer-line.show { display: flex; }
+        .ans-correct { color: #1d9e63; }
+        .ans-wrong { color: #d64545; }
 
-        .category-btn.wrong-btn {
-            border-color: #f44336;
-            color: #f44336;
+        .answer-stats {
+            display: none;
+            margin-top: 10px;
+            color: #9aa5b1;
+            font-size: 12px;
+            line-height: 1.9;
         }
+        .answer-stats.show { display: block; }
 
-        .category-btn.wrong-btn.active {
-            background: #f44336;
-            color: white;
+        .result-section {
+            display: none;
+            margin-top: 16px;
+            padding: 14px 16px;
+            border-radius: 8px;
+            background: #f7f9fc;
+            border-left: 3px solid #4c7dff;
         }
-
-        .category-btn.wrong-btn:hover {
-            background: #f44336;
-            color: white;
+        .result-section.show { display: block; }
+        .result-section.correct,
+        .result-section.incorrect {
+            background: #f7f9fc;
+            border-left: 3px solid #4c7dff;
         }
+        .result-title { font-size: 13px; font-weight: 700; color: #5a6b7b; margin-bottom: 6px; }
+        .result-section.correct .result-title,
+        .result-section.incorrect .result-title { color: #5a6b7b; }
+        .result-text { color: #4a5866; font-size: 14px; line-height: 1.7; }
 
         .empty-tip {
             text-align: center;
-            color: #999;
-            padding: 40px 20px;
-            font-size: 16px;
-            line-height: 1.8;
+            color: #8a94a6;
+            padding: 60px 20px;
+            font-size: 15px;
+            line-height: 2;
+            background: #fff;
+            border: 1px dashed #dfe4ea;
+            border-radius: 12px;
+        }
+
+        /* ===== 底部操作栏 ===== */
+        .buttons {
+            display: flex;
+            gap: 12px;
+            padding: 14px 24px;
+            border-top: 1px solid #e8ebf0;
+            background: #fff;
+        }
+
+        button { font-family: inherit; }
+
+        .btn-prev, .btn-next, .btn-submit {
+            border: none;
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: 700;
+            padding: 12px 0;
+            cursor: pointer;
+            transition: all .15s ease;
+        }
+
+        .btn-prev { flex: 1; background: #fff; color: #5a6b7b; border: 1px solid #dfe4ea; }
+        .btn-prev:hover:not(:disabled) { background: #f2f4f8; color: #33414f; }
+        .btn-submit { flex: 1.4; background: #4c7dff; color: #fff; }
+        .btn-submit:hover { background: #3a6ae8; }
+        .btn-next { flex: 1; background: #1f2d3d; color: #fff; }
+        .btn-next:hover { background: #33414f; }
+
+        button:disabled { opacity: .45; cursor: not-allowed; }
+
+        #masterBtn { flex: 1.2; align-self: center; }
+
+        .btn-small {
+            padding: 6px 12px;
+            border: none;
+            border-radius: 6px;
+            font-size: 12px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all .15s ease;
+        }
+        .btn-jump { background: #4c7dff; color: #fff; }
+        .btn-jump:hover { background: #3a6ae8; }
+        .btn-reset { background: #fff; color: #d64545; border: 1px solid #f2c4c4; }
+        .btn-reset:hover { background: #d64545; color: #fff; border-color: #d64545; }
+        .btn-clearwrong { background: #fff; color: #e08a00; border: 1px solid #f5d9a8; }
+        .btn-clearwrong:hover { background: #e08a00; color: #fff; border-color: #e08a00; }
+
+        /* ===== 完成页 ===== */
+        .completion {
+            display: none;
+            text-align: center;
+            background: #fff;
+            border: 1px solid #e8ebf0;
+            border-radius: 12px;
+            margin: 24px;
+            padding: 48px 32px;
+        }
+        .completion.show { display: block; }
+        .completion h2 { font-size: 22px; color: #1f2d3d; margin-bottom: 8px; }
+        .score { font-size: 40px; color: #4c7dff; font-weight: 800; margin: 12px 0 6px; }
+        .score-text { color: #8a94a6; font-size: 15px; margin-bottom: 28px; }
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            gap: 12px;
+            margin-bottom: 28px;
+        }
+        .stat-item { padding: 14px 10px; background: #f7f9fc; border: 1px solid #eef1f4; border-radius: 10px; }
+        .stat-number { font-size: 20px; font-weight: 800; color: #4c7dff; }
+        .stat-label { font-size: 12px; color: #8a94a6; margin-top: 4px; }
+        .btn-restart {
+            background: #4c7dff;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            padding: 12px 36px;
+            font-size: 15px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+        .btn-restart:hover { background: #3a6ae8; }
+
+        .site-footer { padding-bottom: 14px; }
+
+        /* ===== 移动端适配 ===== */
+        @media (max-width: 640px) {
+            .app-header { padding: 12px 16px; flex-wrap: wrap; }
+            .header-progress { min-width: 100%; order: 3; }
+            .app-subtitle { display: none; }
+            .app-title { font-size: 14px; }
+            .toolbar { justify-content: center; padding: 8px 12px; }
+            .app-main { padding: 14px; }
+            .question-section { padding: 18px 16px; }
+            .buttons { padding: 12px 14px; }
+            .completion { margin: 14px; padding: 32px 18px; }
         }
 /* SIG:BEGIN:css */
         /* ===== 署名样式（请勿删除 / DO NOT REMOVE） ===== */
@@ -428,42 +512,60 @@
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="header">
-            <h1>📚 铁安证题库</h1>
-            <div class="category-selector" id="categorySelector"></div>
-            <div class="progress">
-                <div class="progress-bar" id="progressBar"></div>
+    <div class="app">
+        <header class="app-header">
+            <div class="app-logo">📚</div>
+            <div class="app-title">中铁十八局集团市政工程有限公司'铁安证'题库系统<span class="app-subtitle">铁路工程安全知识练习</span></div>
+            <div class="header-progress">
+                <div class="progress">
+                    <div class="progress-bar" id="progressBar"></div>
+                </div>
+                <span id="progressText"></span>
             </div>
-            <div style="color: #999; font-size: 14px; margin-top: 10px;" id="progressText"></div>
+        </header>
+
+        <div class="mode-switch">
+            <button class="mode-btn active" id="modeQuizBtn" onclick="setMode('quiz')">答题模式</button>
+            <button class="mode-btn" id="modeMemBtn" onclick="setMode('memorize')">背题模式</button>
         </div>
+
+        <nav class="category-selector" id="categorySelector"></nav>
 
         <div id="quizContent">
             <div class="toolbar">
-                <span style="color:#999;font-size:14px;">跳转到第</span>
+                <span>跳转到第</span>
                 <input type="number" id="jumpInput" min="1" placeholder="题号">
-                <span style="color:#999;font-size:14px;">题</span>
+                <span>题</span>
                 <button class="btn-small btn-jump" onclick="jumpToQuestion()">跳转</button>
                 <button class="btn-small btn-reset" onclick="resetProgress()">重置进度</button>
                 <button class="btn-small btn-clearwrong" id="clearWrongBtn" onclick="clearWrong()" style="display:none;">清空错题本</button>
             </div>
-            <div class="question-section" id="questionSection">
-                <div class="question-number" id="questionNumber"></div>
-                <div class="question-text" id="questionText"></div>
-                <div class="options" id="optionsContainer"></div>
-                <div class="result-section" id="resultSection">
-                    <div class="result-title" id="resultTitle"></div>
-                    <div class="result-text" id="resultText"></div>
-                </div>
-            </div>
 
-            <div class="empty-tip" id="emptyTip" style="display:none;">
-                🎉 错题本是空的！<br>做错的题目会自动收集到这里，方便你针对性复习。
-            </div>
+            <main class="app-main">
+                <div class="question-section" id="questionSection">
+                    <div class="q-head">
+                        <span class="question-number" id="questionNumber"></span>
+                        <span class="qtype-badge" id="qtypeBadge"></span>
+                    </div>
+                    <div class="question-text" id="questionText"></div>
+                    <div class="options" id="optionsContainer"></div>
+                    <div class="answer-line" id="answerLine"></div>
+                    <div class="answer-stats" id="answerStats"></div>
+                    <div class="result-section" id="resultSection">
+                        <div class="result-title" id="resultTitle"></div>
+                        <div class="result-text" id="resultText"></div>
+                    </div>
+                </div>
+
+                <div class="empty-tip" id="emptyTip" style="display:none;">
+                    🎉 错题本是空的！<br>做错的题目会自动收集到这里，方便你针对性复习。
+                </div>
+            </main>
 
             <div class="buttons">
+                <button class="btn-prev" id="prevBtn" onclick="prevQuestion()">上一页</button>
                 <button class="btn-submit" id="submitBtn" onclick="submitAnswer()">确定</button>
-                <button class="btn-next" id="nextBtn" onclick="nextQuestion()" style="display: none;">下一题</button>
+                <button class="btn-next" id="nextBtn" onclick="nextQuestion()">下一页</button>
                 <button class="btn-small btn-clearwrong" id="masterBtn" onclick="masterCurrent()" style="display: none;">已掌握，移出错题本</button>
             </div>
         </div>
@@ -477,9 +579,9 @@
         </div>
 
 <!-- SIG:BEGIN:footer -->
-        <!-- 署名（请勿删除 / DO NOT REMOVE）| 制作人：徐徐 任欣 | 微信：doublebean_vip -->
+        <!-- 署名（请勿删除 / DO NOT REMOVE）| 制作人：徐徐 | 微信：doublebean_vip -->
         <footer class="site-footer" id="siteFooter">
-            <span class="sig-line">制作人：徐徐 任欣</span>
+            <span class="sig-line">制作人：徐徐、任欣</span>
             <span class="sig-sep">·</span>
             <span class="sig-line">微信：doublebean_vip</span>
             <img class="sig-qr" alt="微信二维码" title="微信：doublebean_vip"
@@ -496,6 +598,8 @@
         const LS_PROGRESS = 'quiz_progress_v1';
         const LS_WRONG = 'quiz_wrong_v1';
         const LS_LAST = 'quiz_last_category_v1';
+        const LS_STATS = 'quiz_stats_v1';
+        const LETTERS = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
 
         let quizData = {};
         let currentCategory = '';
@@ -503,6 +607,8 @@
         let activeList = [];
         let currentQuestionIndex = 0;
         let answered = false;
+        const LS_MODE = 'quiz_mode_v1';
+        let currentMode = localStorage.getItem(LS_MODE) || 'quiz';
 
         // 加载题库数据：优先使用内嵌的 questions-data.js（双击即可用），
         // 如果不存在再尝试从 questions.json 加载（需本地服务器）。
@@ -595,6 +701,7 @@
 
         // ===== 初始化 =====
         function init() {
+            syncModeButtons();
             renderCategoryButtons();
             // 恢复上次所在分类
             const last = localStorage.getItem(LS_LAST);
@@ -607,21 +714,25 @@
             const selector = document.getElementById('categorySelector');
             selector.innerHTML = '';
             Object.keys(quizData).forEach(category => {
+                // 一组 = 上下两行：第一行分类，第二行对应错题本
+                const group = document.createElement('div');
+                group.className = 'cat-group';
+
                 const btn = document.createElement('button');
                 btn.className = 'category-btn' + (category === currentCategory ? ' active' : '');
                 btn.textContent = category;
                 btn.onclick = () => selectCategory(category);
-                selector.appendChild(btn);
-            });
-            // 每个分类对应一个独立错题本
-            Object.keys(quizData).forEach(category => {
+                group.appendChild(btn);
+
                 const wid = WRONG_PREFIX + category;
                 const wbtn = document.createElement('button');
                 const wc = wrongCountOf(category);
                 wbtn.className = 'category-btn wrong-btn' + (currentCategory === wid ? ' active' : '');
                 wbtn.textContent = `${category}·错题(${wc})`;
                 wbtn.onclick = () => selectCategory(wid);
-                selector.appendChild(wbtn);
+                group.appendChild(wbtn);
+
+                selector.appendChild(group);
             });
         }
 
@@ -648,13 +759,114 @@
             currentQuestionIndex = idx;
             answered = false;
 
-            document.getElementById('quizContent').style.display = 'block';
-            document.getElementById('completionSection').classList.remove('show');
             document.getElementById('clearWrongBtn').style.display =
                 isWrong(category) ? 'inline-block' : 'none';
 
             renderCategoryButtons();
-            renderQuestion();
+            renderCurrentView();
+        }
+
+        // ===== 模式切换 =====
+        function syncModeButtons() {
+            document.getElementById('modeQuizBtn').classList.toggle('active', currentMode === 'quiz');
+            document.getElementById('modeMemBtn').classList.toggle('active', currentMode === 'memorize');
+        }
+
+        function setMode(mode) {
+            if (currentMode === mode) return;
+            currentMode = mode;
+            localStorage.setItem(LS_MODE, mode);
+            syncModeButtons();
+            renderCurrentView();
+        }
+
+        // 根据当前模式渲染主区域（两种模式都是一题一页）
+        function renderCurrentView() {
+            document.getElementById('completionSection').classList.remove('show');
+            document.getElementById('quizContent').style.display = 'flex';
+            if (currentMode === 'memorize') renderMemorizePage();
+            else renderQuestion();
+        }
+
+        function escapeHtml(s) {
+            return String(s).replace(/[&<>"']/g, c =>
+                ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+        }
+
+        // ===== 背题模式：一题一页，直接标出正确答案 =====
+        function renderMemorizePage() {
+            const emptyTip = document.getElementById('emptyTip');
+            const qSection = document.getElementById('questionSection');
+            const buttons = document.querySelector('.buttons');
+
+            if (activeList.length === 0) {
+                qSection.style.display = 'none';
+                buttons.style.display = 'none';
+                emptyTip.style.display = 'block';
+                document.getElementById('progressBar').style.width = '0%';
+                document.getElementById('progressText').textContent = '';
+                return;
+            }
+            qSection.style.display = 'block';
+            buttons.style.display = 'flex';
+            emptyTip.style.display = 'none';
+
+            const pointer = activeList[currentQuestionIndex];
+            const question = pointer.question;
+            const isMultiple = Array.isArray(question.correct);
+            const correctIdx = isMultiple ? question.correct.slice() : [question.correct];
+
+            let label = `背题模式 · 第 ${currentQuestionIndex + 1} 题 / 共 ${activeList.length} 题`;
+            if (isWrong(currentCategory)) label = `错题复习 · ${label}`;
+            document.getElementById('questionNumber').textContent = label;
+
+            const baseCat = isWrong(currentCategory) ? realCat(currentCategory) : currentCategory;
+            document.getElementById('qtypeBadge').textContent =
+                baseCat.includes('判断') ? '判断' : (isMultiple ? '多选' : '单选');
+            document.getElementById('questionText').textContent = question.question;
+
+            // 选项：正确项直接绿色标出，不可点击
+            const container = document.getElementById('optionsContainer');
+            container.innerHTML = '';
+            question.options.forEach((option, index) => {
+                const isCor = correctIdx.includes(index);
+                const lbl = document.createElement('label');
+                lbl.className = 'option answered' + (isCor ? ' is-correct' : '');
+                const text = option.replace(/^[A-Ha-h][.、．]\s*/, '');
+                lbl.innerHTML = `
+                    <input type="${isMultiple ? 'checkbox' : 'radio'}" name="answer" value="${index}">
+                    <span class="option-circle">${isCor ? '✓' : LETTERS[index]}</span>
+                    <span class="option-label">${text}</span>
+                `;
+                container.appendChild(lbl);
+            });
+
+            // 直接给出正确答案
+            const ansText = correctIdx.slice().sort((a, b) => a - b).map(i => LETTERS[i]).join('、');
+            const line = document.getElementById('answerLine');
+            line.innerHTML = `<span>正确答案 <span class="ans-correct">${ansText}</span></span>`;
+            line.classList.add('show');
+
+            document.getElementById('answerStats').classList.remove('show');
+            const resultSection = document.getElementById('resultSection');
+            if (question.explanation) {
+                resultSection.className = 'result-section show';
+                document.getElementById('resultTitle').textContent = '💡 解析';
+                document.getElementById('resultText').textContent = question.explanation;
+            } else {
+                resultSection.classList.remove('show', 'correct', 'incorrect');
+            }
+
+            // 背题模式无需作答：隐藏确定，只保留翻页
+            document.getElementById('submitBtn').style.display = 'none';
+            document.getElementById('masterBtn').style.display = 'none';
+            document.getElementById('prevBtn').disabled = currentQuestionIndex === 0;
+            document.getElementById('nextBtn').disabled = false;
+            document.getElementById('nextBtn').textContent =
+                currentQuestionIndex >= activeList.length - 1 ? '完成' : '下一页';
+
+            persistCurrentIndex();
+            updateProgress();
         }
 
         function renderQuestion() {
@@ -686,6 +898,11 @@
             document.getElementById('questionNumber').textContent = label;
             document.getElementById('questionText').textContent = question.question;
 
+            // 题型徽章：单选 / 多选 / 判断
+            const baseCat = isWrong(currentCategory) ? realCat(currentCategory) : currentCategory;
+            document.getElementById('qtypeBadge').textContent =
+                baseCat.includes('判断') ? '判断' : (isMultiple ? '多选' : '单选');
+
             const container = document.getElementById('optionsContainer');
             container.innerHTML = '';
 
@@ -693,11 +910,15 @@
                 const lbl = document.createElement('label');
                 lbl.className = 'option';
                 const inputType = isMultiple ? 'checkbox' : 'radio';
+                // 去掉选项文字自带的 "A. " 前缀，字母改由圆圈展示
+                const text = option.replace(/^[A-Ha-h][.、．]\s*/, '');
                 lbl.innerHTML = `
                     <input type="${inputType}" name="answer" value="${index}">
-                    <span class="option-label">${option}</span>
+                    <span class="option-circle">${LETTERS[index]}</span>
+                    <span class="option-label">${text}</span>
                 `;
                 lbl.onclick = () => {
+                    if (answered) return;
                     if (isMultiple) {
                         const input = lbl.querySelector('input');
                         if (input) input.checked = !input.checked;
@@ -710,13 +931,27 @@
             });
 
             document.getElementById('resultSection').classList.remove('show', 'correct', 'incorrect');
+            document.getElementById('answerLine').classList.remove('show');
+            document.getElementById('answerStats').classList.remove('show');
             document.getElementById('submitBtn').style.display = 'block';
-            document.getElementById('nextBtn').style.display = 'none';
             document.getElementById('masterBtn').style.display = 'none';
+            // 翻页按钮状态：第一题禁用「上一页」；最后一题的「下一页」会进入完成页
+            document.getElementById('prevBtn').disabled = currentQuestionIndex === 0;
+            document.getElementById('nextBtn').disabled = false;
+            document.getElementById('nextBtn').textContent =
+                currentQuestionIndex >= activeList.length - 1 ? '完成' : '下一页';
             answered = false;
 
             persistCurrentIndex();
             updateProgress();
+        }
+
+        // ===== 上一页 =====
+        function prevQuestion() {
+            if (currentQuestionIndex > 0) {
+                currentQuestionIndex--;
+                renderCurrentView();
+            }
         }
 
         function updateMultipleSelection() {
@@ -769,53 +1004,91 @@
                 renderCategoryButtons();
             }
 
-            if (isCorrect) {
-                showResult(true, question.explanation);
-                if (isMultiple) {
-                    question.correct.forEach(idx => {
-                        document.querySelectorAll('.option')[idx].classList.add('correct');
-                    });
-                } else {
-                    document.querySelectorAll('.option')[question.correct].classList.add('correct');
-                }
-            } else {
-                showResult(false, question.explanation);
-                selectedIndices.forEach(idx => {
-                    if (isMultiple && !question.correct.includes(idx)) {
-                        document.querySelectorAll('.option')[idx].classList.add('incorrect');
-                    } else if (!isMultiple) {
-                        document.querySelectorAll('.option')[idx].classList.add('incorrect');
-                    }
-                });
-                if (isMultiple) {
-                    question.correct.forEach(idx => {
-                        document.querySelectorAll('.option')[idx].classList.add('correct');
-                    });
-                } else {
-                    document.querySelectorAll('.option')[question.correct].classList.add('correct');
-                }
-            }
+            showResult(isCorrect, question.explanation);
+            markOptions(question, selectedIndices, isMultiple);
+            showAnswerLine(question, selectedIndices, isCorrect, isMultiple);
+            showAnswerStats(pointer, isCorrect);
 
             document.getElementById('submitBtn').style.display = 'none';
-            document.getElementById('nextBtn').style.display = 'block';
             // 错题本模式下，答完显示「已掌握，移出错题本」按钮
             document.getElementById('masterBtn').style.display =
                 isWrong(currentCategory) ? 'block' : 'none';
+        }
+
+        // ===== 答题后在选项上直接标记对错 =====
+        function markOptions(question, selectedIndices, isMultiple) {
+            const correctIdx = isMultiple ? question.correct.slice() : [question.correct];
+            document.querySelectorAll('.option').forEach((opt, i) => {
+                opt.classList.add('answered');
+                opt.classList.remove('selected');
+                const circle = opt.querySelector('.option-circle');
+                if (correctIdx.includes(i)) {
+                    opt.classList.add('is-correct');
+                    if (circle) circle.textContent = '✓';
+                } else if (selectedIndices.includes(i)) {
+                    opt.classList.add('is-wrongpick');
+                    if (circle) circle.textContent = '✕';
+                }
+            });
+        }
+
+        // ===== 底部「正确答案 / 您选择」=====
+        function showAnswerLine(question, selectedIndices, isCorrect, isMultiple) {
+            const correctIdx = (isMultiple ? question.correct.slice() : [question.correct])
+                .sort((a, b) => a - b);
+            const ansText = correctIdx.map(i => LETTERS[i]).join('、');
+            const selText = selectedIndices.map(i => LETTERS[i]).join('、');
+            const line = document.getElementById('answerLine');
+            line.innerHTML = `
+                <span>正确答案 <span class="ans-correct">${ansText}</span></span>
+                <span>您选择 <span class="${isCorrect ? 'ans-correct' : 'ans-wrong'}">${selText}</span></span>
+            `;
+            line.classList.add('show');
+        }
+
+        // ===== 作答统计（本人 / 累计）=====
+        function loadStats() {
+            try { return JSON.parse(localStorage.getItem(LS_STATS)) || {}; }
+            catch (e) { return {}; }
+        }
+        function showAnswerStats(pointer, isCorrect) {
+            const map = loadStats();
+            const key = pointer.category + '#' + pointer.index;
+            if (!map[key]) map[key] = { tries: 0, correct: 0 };
+            if (!map.__total) map.__total = { tries: 0, correct: 0 };
+            map[key].tries++;
+            map.__total.tries++;
+            if (isCorrect) { map[key].correct++; map.__total.correct++; }
+            localStorage.setItem(LS_STATS, JSON.stringify(map));
+
+            const q = map[key], t = map.__total;
+            const pct = q.tries ? Math.round(q.correct / q.tries * 100) : 0;
+            const tpct = t.tries ? Math.round(t.correct / t.tries * 100) : 0;
+            const box = document.getElementById('answerStats');
+            box.innerHTML =
+                `本人作答：${q.tries}次　正确率：${pct}%<br>` +
+                `累计作答：${t.tries}次　正确率：${tpct}%`;
+            box.classList.add('show');
         }
 
         function showResult(isCorrect, explanation) {
             const resultSection = document.getElementById('resultSection');
             const resultTitle = document.getElementById('resultTitle');
             const resultText = document.getElementById('resultText');
+            // 与刷题App一致：不再显示大块对错横幅，仅在有解析时展示解析
+            if (!explanation) {
+                resultSection.classList.remove('show', 'correct', 'incorrect');
+                return;
+            }
             resultSection.className = 'result-section show ' + (isCorrect ? 'correct' : 'incorrect');
-            resultTitle.textContent = isCorrect ? '✓ 正确' : '✗ 错误';
-            resultText.textContent = explanation || (isCorrect ? '回答正确！' : '请记住正确答案。');
+            resultTitle.textContent = '💡 解析';
+            resultText.textContent = explanation;
         }
 
         function nextQuestion() {
             if (currentQuestionIndex < activeList.length - 1) {
                 currentQuestionIndex++;
-                renderQuestion();
+                renderCurrentView();
             } else {
                 showCompletion();
             }
@@ -882,10 +1155,8 @@
             if (n > activeList.length) n = activeList.length;
             currentQuestionIndex = n - 1;
             answered = false;
-            document.getElementById('quizContent').style.display = 'block';
-            document.getElementById('completionSection').classList.remove('show');
-            renderQuestion();
             input.value = '';
+            renderCurrentView();
         }
 
         // ===== 重置当前分类进度 =====
@@ -895,9 +1166,7 @@
             const map = loadProgress();
             map[currentCategory] = 0;
             saveProgressMap(map);
-            document.getElementById('quizContent').style.display = 'block';
-            document.getElementById('completionSection').classList.remove('show');
-            renderQuestion();
+            renderCurrentView();
         }
 
         // ===== 已掌握，移出当前错题 =====
@@ -910,7 +1179,7 @@
                 currentQuestionIndex = Math.max(0, activeList.length - 1);
             }
             renderCategoryButtons();
-            renderQuestion();
+            renderCurrentView();
         }
 
         // ===== 清空当前分类的错题本 =====
@@ -924,29 +1193,29 @@
             activeList = buildActiveList(currentCategory);
             currentQuestionIndex = 0;
             renderCategoryButtons();
-            renderQuestion();
+            renderCurrentView();
         }
 /* SIG:BEGIN:guard */
         /* ============================================================
          *  署名保护 / SIGNATURE GUARD  —  请勿删除 (DO NOT REMOVE)
-         *  制作人：徐徐 任欣
+         *  制作人：徐徐
          *  微信：doublebean_vip
-         *  Copyright (c) 2026 徐徐 任欣. All Rights Reserved.
+         *  Copyright (c) 2026 徐徐. All Rights Reserved.
          *
          *  作用：即使有人从 HTML 里删掉页脚署名，本段代码也会在运行时
          *  自动把它重建回来，并在控制台告警。
          * ============================================================ */
         const AUTHOR_SIGNATURE = Object.freeze({
-            name: '徐徐 任欣',
+            name: '徐徐、任欣',
             wechat: 'doublebean_vip',
             qr: 'data:image/png;base64,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',
-            copyright: 'Copyright © 2026 徐徐 任欣. All Rights Reserved.'
+            copyright: 'Copyright © 2026 徐徐. All Rights Reserved.'
         });
 
         (function signatureGuard() {
             const FOOTER_ID = 'siteFooter';
             const WARN = '[署名保护] 检测到署名被移除，已自动恢复。' +
-                         '制作人：徐徐 任欣（微信：doublebean_vip）';
+                         '制作人：徐徐、任欣（微信：doublebean_vip）';
 
             function buildFooter() {
                 const f = document.createElement('footer');
@@ -983,7 +1252,7 @@
 
             // 控制台常驻署名（低调）
             try {
-                console.log('%c题库系统%c  制作人：徐徐 任欣 · 微信：doublebean_vip',
+                console.log("%c中铁十八局集团市政工程有限公司'铁安证'题库系统%c  制作人：徐徐、任欣 · 微信：doublebean_vip",
                     'background:#bbb;color:#fff;padding:1px 6px;border-radius:3px;',
                     'color:#999;');
                 console.log('%c' + AUTHOR_SIGNATURE.copyright, 'color:#ccc;');

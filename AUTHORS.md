@@ -2,15 +2,15 @@
 
 | 角色 | 姓名 | 微信 |
 | ---- | ---- | ---- |
-| 制作人 (Author) | **徐徐 任欣** | doublebean_vip |
+| 制作人 (Author) | **徐徐** | doublebean_vip |
 
-**Copyright (c) 2026 徐徐 任欣. All Rights Reserved.**
+**Copyright (c) 2026 徐徐. All Rights Reserved.**
 
 ---
 
 ## 声明
 
-本项目（题库系统）由 **徐徐 任欣** 独立制作，包括网页界面、题库数据结构、
+本项目（题库系统）由 **徐徐** 独立制作，包括网页界面、题库数据结构、
 格式转换脚本与全部文档。
 
 任何人在复制、分发或二次使用本项目内容时，**必须完整保留本文件及所有
@@ -44,4 +44,4 @@ python tools/signature_guard.py list     # 列出全部受保护组件
 
 ---
 
-制作人：徐徐 任欣 　微信：doublebean_vip
+制作人：徐徐 　微信：doublebean_vip
