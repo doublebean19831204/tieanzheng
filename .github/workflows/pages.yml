@@ -1,0 +1,63 @@
+# SIG:BEGIN:header
+# ============================================================
+#  署名信息 / ATTRIBUTION  —  请勿删除 (DO NOT REMOVE)
+#  制作人：徐徐 任欣
+#  微信：doublebean_vip
+#  Copyright (c) 2026 徐徐 任欣. All Rights Reserved.
+# ============================================================
+# SIG:END:header
+name: Deploy GitHub Pages
+
+on:
+  push:
+    branches: ["main"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+# SIG:BEGIN:deploy-guard
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      # 署名校验：缺失或被篡改则部署中止（制作人：徐徐 任欣 / 微信 doublebean_vip）
+      - name: Verify author signature (blocks deploy if removed)
+        run: python tools/signature_guard.py check
+# SIG:END:deploy-guard
+      - name: Prepare static site
+        run: |
+          mkdir -p _site
+          cp index.html _site/
+          cp questions-data.js _site/
+          cp questions.json _site/
+          cp .nojekyll _site/ || true
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
